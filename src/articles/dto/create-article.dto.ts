@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsArray,
   IsBoolean,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   MaxLength,
@@ -27,4 +29,8 @@ export class CreateArticleDto {
   @IsBoolean()
   @ApiProperty({ required: false, default: false })
   published?: boolean;
+  @IsOptional()
+  @IsNumber()
+  @ApiProperty({ required: false, nullable: true })
+  authorId?: number;
 }

@@ -16,4 +16,6 @@ export class ArticleEntity implements Article {
   createdAt: Date;
   @ApiProperty()
   updatedAt: Date;
+  @ApiProperty()
+  authorId: number;
 }
