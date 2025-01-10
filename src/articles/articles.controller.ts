@@ -22,51 +22,61 @@ export class ArticlesController {
 
   @Post()
   @ApiCreatedResponse({ type: ArticleEntity })
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articlesService.create(createArticleDto);
+  async create(@Body() createArticleDto: CreateArticleDto) {
+    const article = this.articlesService.create(createArticleDto);
+    return new ArticleEntity(await article);
   }
 
   @Get()
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
-  findAll() {
-    return this.articlesService.findAll();
+  async findAll() {
+    const articles = await this.articlesService.findAll();
+    return articles.map((article) => {
+      new ArticleEntity(article);
+    });
   }
   @Get('drafts')
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
-  findDrafts() {
-    return this.articlesService.findDrafts();
+  async findDrafts() {
+    const articles = await this.articlesService.findDrafts();
+    return articles.map((article) => {
+      new ArticleEntity(article);
+    });
   }
 
   @Get(':id')
   @ApiOkResponse({ type: ArticleEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    const article = this.articlesService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const article = await this.articlesService.findOne(id);
     if (!article) {
       throw new NotFoundException(`the article with id-${id} is not found`);
     }
-    return article;
+    return new ArticleEntity(article);
   }
 
   @Patch(':id')
   @ApiOkResponse({ type: ArticleEntity })
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
-    const articleToUpdate = this.articlesService.update(id, updateArticleDto);
+    const articleToUpdate = await this.articlesService.update(
+      id,
+      updateArticleDto,
+    );
     if (!articleToUpdate) {
       throw new NotFoundException(`the article with id-${id} is not found`);
     }
-    return articleToUpdate;
+    return new ArticleEntity(articleToUpdate);
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: ArticleEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    const articleToDelete = this.articlesService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const articleToDelete = await this.articlesService.remove(id);
     if (!articleToDelete) {
       throw new NotFoundException(`the article with id-${id} is not found`);
     }
-    return articleToDelete;
+    return new ArticleEntity(articleToDelete);
   }
 }

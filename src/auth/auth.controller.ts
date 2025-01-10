@@ -68,6 +68,6 @@ export class AuthController {
   @ApiCreatedResponse({ type: UserEntity })
   @ApiBody({ type: CreateUserDto })
   async signup(@Body() createUserDto: CreateUserDto) {
-    return this.authService.signup(createUserDto);
+    return new UserEntity(await this.authService.signup(createUserDto));
   }
 }

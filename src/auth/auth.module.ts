@@ -10,12 +10,14 @@ import * as dotenv from 'dotenv';
 import { JwtStrategy } from './jwt.strategy';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { UserEntity } from 'src/users/entities/user.entity';
 dotenv.config();
 @Module({
   providers: [
     AuthService,
     UsersService,
     CreateUserDto,
+    UserEntity,
     LocalStrategy,
     JwtStrategy,
   ],
