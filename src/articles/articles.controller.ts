@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -38,8 +39,12 @@ export class ArticlesController {
 
   @Get(':id')
   @ApiOkResponse({ type: ArticleEntity })
-  findOne(@Param('id') id: string) {
-    return this.articlesService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    const article = this.articlesService.findOne(id);
+    if (!article) {
+      throw new NotFoundException(`the article with id-${id} is not found`);
+    }
+    return article;
   }
 
   @Patch(':id')
@@ -48,12 +53,20 @@ export class ArticlesController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
-    return this.articlesService.update(id, updateArticleDto);
+    const articleToUpdate = this.articlesService.update(id, updateArticleDto);
+    if (!articleToUpdate) {
+      throw new NotFoundException(`the article with id-${id} is not found`);
+    }
+    return articleToUpdate;
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: ArticleEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.articlesService.remove(id);
+    const articleToDelete = this.articlesService.remove(id);
+    if (!articleToDelete) {
+      throw new NotFoundException(`the article with id-${id} is not found`);
+    }
+    return articleToDelete;
   }
 }
