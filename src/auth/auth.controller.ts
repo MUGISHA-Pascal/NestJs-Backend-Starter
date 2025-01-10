@@ -14,11 +14,26 @@ import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
+import {
+  LoginBodyDto,
+  LoginResponseDto,
+  logoutBadResponseDto,
+  logoutResponseDto,
+} from './dto/auth.dto';
+import { UserEntity } from 'src/users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
   @UseGuards(LocalAuthGuard)
+  @ApiCreatedResponse({ type: LoginResponseDto })
+  @ApiBody({ type: LoginBodyDto })
   @Post('login')
   async login(@Request() req, @Res() res) {
     const token = await this.authService.login(req.user);
@@ -28,6 +43,8 @@ export class AuthController {
       .json({ message: 'login successful', token });
   }
   @UseGuards(LocalAuthGuard)
+  @ApiOkResponse({ type: logoutResponseDto })
+  @ApiBadRequestResponse({ type: logoutBadResponseDto })
   @Post('logout')
   async logout(@Req() req, @Res() res) {
     req.logout((err) => {
@@ -42,11 +59,14 @@ export class AuthController {
     });
   }
   @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: UserEntity })
   @Get('profile')
   async getProfile(@Request() req) {
     return req.user;
   }
   @Post('signup')
+  @ApiCreatedResponse({ type: UserEntity })
+  @ApiBody({ type: CreateUserDto })
   async signup(@Body() createUserDto: CreateUserDto) {
     return this.authService.signup(createUserDto);
   }
