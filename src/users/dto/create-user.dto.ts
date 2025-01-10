@@ -3,6 +3,7 @@ import {
   IsBoolean,
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsStrongPassword,
 } from 'class-validator';
@@ -22,7 +23,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   email: string | null;
   @IsBoolean()
-  @IsNotEmpty()
+  @IsOptional()
   @ApiProperty({ required: false, default: false })
   verified?: boolean;
 }

@@ -27,7 +27,6 @@ import {
   logoutResponseDto,
 } from './dto/auth.dto';
 import { UserEntity } from 'src/users/entities/user.entity';
-
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -38,7 +37,7 @@ export class AuthController {
   async login(@Request() req, @Res() res) {
     const token = await this.authService.login(req.user);
     await res.setHeader('Authorization', `Bearer ${token}`);
-    return res
+    return await res
       .status(HttpStatus.OK)
       .json({ message: 'login successful', token });
   }
