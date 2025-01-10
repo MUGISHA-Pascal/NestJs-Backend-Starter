@@ -17,3 +17,11 @@ model Article{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model User{
+  id Int @id @default(autoincrement())
+  username String
+  password String
+  email String? @unique
+  verified Boolean @default(false)
+}

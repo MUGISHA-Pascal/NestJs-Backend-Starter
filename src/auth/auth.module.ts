@@ -8,11 +8,20 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import * as dotenv from 'dotenv';
 import { JwtStrategy } from './jwt.strategy';
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 dotenv.config();
 @Module({
-  providers: [AuthService, UsersService, LocalStrategy, JwtStrategy],
+  providers: [
+    AuthService,
+    UsersService,
+    CreateUserDto,
+    LocalStrategy,
+    JwtStrategy,
+  ],
   imports: [
     UsersModule,
+    PrismaModule,
     PassportModule,
     JwtModule.register({
       secret: process.env.SECRET_KEY as string,
