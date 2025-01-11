@@ -8,6 +8,7 @@ import { ArticlesModule } from './articles/articles.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { PostModule } from './post/post.module';
+import { join } from 'path';
 @Module({
   imports: [
     AuthModule,
@@ -17,6 +18,9 @@ import { PostModule } from './post/post.module';
     ArticlesModule,
     GraphQLModule.forRoot({
       driver: ApolloDriver,
+      typePaths: ['./**/*.graphql'],
+      definitions: { path: join(process.cwd(), 'src/generated/graphql.ts') },
+      sortSchema: true,
     }),
     PostModule,
   ],
