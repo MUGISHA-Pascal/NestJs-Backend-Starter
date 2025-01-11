@@ -16,6 +16,7 @@ input UpdatePostInput {
 }
 
 type Query {
+  post(id: ID!): Post
   getPosts: [Post]!
   getPost(id: Int!): Post
 }

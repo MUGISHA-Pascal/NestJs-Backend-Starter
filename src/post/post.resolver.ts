@@ -15,7 +15,7 @@ export class PostResolver {
   }
 
   @Query('post')
-  findAll() {
+  getPosts() {
     return this.postService.findAll();
   }
 
