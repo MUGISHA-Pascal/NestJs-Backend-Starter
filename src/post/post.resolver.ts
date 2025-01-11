@@ -14,12 +14,12 @@ export class PostResolver {
     return this.postService.create(createPostInput);
   }
 
-  @Query('post')
+  @Query('getPosts')
   getPosts() {
     return this.postService.findAll();
   }
 
-  @Query('post')
+  @Query('getPost')
   getPost(@Args('id') id: number): Promise<DBPost> {
     return this.postService.findOne(id);
   }

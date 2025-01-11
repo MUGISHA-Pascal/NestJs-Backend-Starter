@@ -9,6 +9,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { PostModule } from './post/post.module';
 import { join } from 'path';
+import { MessagesModule } from './messages/messages.module';
+import { ChatGateway } from './gateways/chat.gateway';
 @Module({
   imports: [
     AuthModule,
@@ -23,8 +25,9 @@ import { join } from 'path';
       sortSchema: true,
     }),
     PostModule,
+    MessagesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatGateway],
 })
 export class AppModule {}

@@ -25,8 +25,8 @@ export interface IMutation {
 }
 
 export interface Post {
-    Id?: Nullable<number>;
     content?: Nullable<string>;
+    id?: Nullable<number>;
     published?: Nullable<boolean>;
     title: string;
 }
@@ -34,7 +34,6 @@ export interface Post {
 export interface IQuery {
     getPost(id: number): Nullable<Post> | Promise<Nullable<Post>>;
     getPosts(): Nullable<Post>[] | Promise<Nullable<Post>[]>;
-    post(id: string): Nullable<Post> | Promise<Nullable<Post>>;
 }
 
 type Nullable<T> = T | null;
