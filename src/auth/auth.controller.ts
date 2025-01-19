@@ -34,12 +34,9 @@ export class AuthController {
   @ApiCreatedResponse({ type: LoginResponseDto })
   @ApiBody({ type: LoginBodyDto })
   @Post('login')
-  async login(@Request() req, @Res() res) {
+  async login(@Request() req) {
     const token = await this.authService.login(req.user);
-    await res.setHeader('Authorization', `Bearer ${token}`);
-    return await res
-      .status(HttpStatus.OK)
-      .json({ message: 'login successful', token });
+    return token;
   }
   @UseGuards(LocalAuthGuard)
   @ApiOkResponse({ type: logoutResponseDto })
