@@ -10,9 +10,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { LocalAuthGuard } from './local-auth.guard';
-import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt-auth.guard';
+import { LocalAuthGuard } from '../guards/local-auth.guard';
+import { AuthService } from '../services/auth.service';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import {
   ApiBadRequestResponse,
@@ -25,7 +25,7 @@ import {
   LoginResponseDto,
   logoutBadResponseDto,
   logoutResponseDto,
-} from './dto/auth.dto';
+} from '../dto/auth.dto';
 import { UserEntity } from 'src/users/entities/user.entity';
 @Controller('auth')
 export class AuthController {

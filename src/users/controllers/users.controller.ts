@@ -1,8 +1,8 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UsersService } from '../services/users.service';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserEntity } from './entities/user.entity';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UserEntity } from '../entities/user.entity';
 
 @Controller('users')
 export class UsersController {
